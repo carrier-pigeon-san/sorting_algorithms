@@ -9,6 +9,9 @@ void insertion_sort_list(listint_t **list)
 {
 	listint_t *temp = (*list)->next;
 
+	if (*list == NULL)
+		return;
+
 	while (temp != NULL)
 	{
 		listint_t *temp3, *temp2 = temp;
