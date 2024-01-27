@@ -2,40 +2,57 @@
 /**
  * split - divides an array into two arrays, each on either side of a chosen
  * pivot
- * @first_index: first index of the array
- * @last_index: last index of the arrray
+ * @array: pointer to array to be sorted
+ * @size: length of whole array
+ * @first: first index of the array
+ * @last: last index of the arrray
  * Return: index to pivot
  */
-int split(int *array, int first_index, int last_index)
+int split(int *array, size_t size, int first, int last)
 {
-	int temp, pivot = array[last_index];
-	int i = first_index - 1;
+	int j, temp, pivot = array[last];
+	int i = first - 1;
 
-	for (j = first_index ; j < last_index; j++)
+	for (j = first; j < last; j++)
 	{
 		if (array[j] < pivot)
 		{
 			i++;
-			temp = array[j];
-			array[j] = array[i];
-			array[i] = temp;
+			if (i != j)
+			{
+				temp = array[i];
+				array[i] = array[j];
+				array[j] = temp;
+				print_array(array, size);
+			}
 		}
 	}
 	i++;
-	array[last_element] = array[i];
-	array[i] = pivot;
-	return i;
+	if (pivot != array[i])
+	{
+		array[last] = array[i];
+		array[i] = pivot;
+		print_array(array, size);
+	}
+	return (i);
 }
 /**
  * _quick_sort - recursively sorts elements of an integer array in ascending
  * order
  * @array: pointer to array to be sorted
- * @first_index: index to the first element of the array
- * @last_index: index to the last element of the array
+ * @size: length of whole array
+ * @first: index to the first element of the array
+ * @last: index to the last element of the array
  */
-void _quick_sort(int *array, int first_element, int last_element)
+void _quick_sort(int *array, size_t size, int first, int last)
 {
-	if (first_element)
+	if (first < last)
+	{
+		int pivot = split(array, size, first, last);
+
+		_quick_sort(array, size, first, pivot - 1);
+		_quick_sort(array, size, pivot + 1, last);
+	}
 }
 /**
  * quick_sort - sorts an array of integers in ascending order using the
@@ -45,5 +62,7 @@ void _quick_sort(int *array, int first_element, int last_element)
  */
 void quick_sort(int *array, size_t size)
 {
-	if ()
+	if (array == NULL || size < 2)
+		return;
+	_quick_sort(array, size, 0, size - 1);
 }
